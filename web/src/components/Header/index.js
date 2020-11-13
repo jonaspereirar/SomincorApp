@@ -7,11 +7,10 @@ import Notifications from '~/components/Notifications';
 import logo from '~/assets/headerLogo.png';
 import foto from '~/assets/FotoMinera.png';
 
-
 import { Container, Profile, Content } from './styles';
 
 export default function Header() {
-  const profile = useSelector(state => state.user.profile);
+  const profile = useSelector((state) => state.user.profile);
 
   return (
     <Container>
@@ -30,10 +29,12 @@ export default function Header() {
             </div>
             <img
               src={
-                profile.avatar !== null
-                  ? profile.avatar.url
-                  : <img src={foto} alt="SomincorApp"/>
-                  //: 'https://api.adorable.io/avatars/50/abott@adorable.png'
+                profile.avatar !== null ? (
+                  profile.avatar.url
+                ) : (
+                  <img src={foto} alt="SomincorApp" />
+                )
+                // : 'https://api.adorable.io/avatars/50/abott@adorable.png'
               }
               alt="profile"
             />

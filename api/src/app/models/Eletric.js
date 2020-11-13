@@ -8,16 +8,19 @@ class Eletric extends Model {
       },
       {
         sequelize,
-        tableName: 'eletrics'
+        tableName: 'eletrics',
       }
     );
     return this;
   }
-      // static associate(models) {
-      //   this.belongsToMany(models.User, { foreignKey: 'departamento_id', through: 'user_departamentos', as: 'users'  })
-      // }
 
+  static associate(models) {
+    this.belongsToMany(models.User, {
+      foreignKey: 'eletric_id',
+      through: 'user_orders',
+      as: 'eletricusers',
+    });
   }
-
+}
 
 export default Eletric;

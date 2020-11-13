@@ -8,16 +8,14 @@ class Instrumentation extends Model {
       },
       {
         sequelize,
-        tableName: 'instrumentations'
+        tableName: 'instrumentations',
       }
     );
     return this;
   }
-      // static associate(models) {
-      //   this.belongsToMany(models.User, { foreignKey: 'departamento_id', through: 'user_departamentos', as: 'users'  })
-      // }
-
-  }
-
+  // static associate(models) {
+  //   this.belongsToMany(models.User, { foreignKey: 'departamento_id', through: 'user_departamentos', as: 'users'  })
+  // }
+}
 
 export default Instrumentation;

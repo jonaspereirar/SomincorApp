@@ -1,14 +1,13 @@
-
 import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
-import signInBackground from '../../../assets/sign-in-background.png';
+import signInBackground from '../../../assets/sign-in-background.jpg';
 
 export const Wrapper = styled.div`
-height: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Container = styled.div`

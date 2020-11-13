@@ -2,19 +2,16 @@ import { Router } from 'express';
 import multer from 'multer';
 import multerConfig from './config/multer';
 
-
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
 import ProviderController from './app/controllers/ProviderController';
 
-// import DepartamentoController from './app/controllers/DepartamentoController';
-
+import OrderController from './app/controllers/OrderController';
 
 import ForgotPasswordController from './app/controllers/ForgotPasswordController';
 
 import authMiddleware from './app/middlewares/auth';
-
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -38,9 +35,10 @@ routes.get('/providers', ProviderController.index);
 // routes.put('/departamento', DepartamentoController.update);
 // routes.delete('/departamento', DepartamentoController.delete);
 
-// // routes.get('/users/:user_id/departamentos', DepartamentoController.index);
-// routes.post('/users/:user_id/departamentos', DepartamentoController.store);
-
-
+routes.get(
+  '/users/:user_id/:direction_id/:area_id/:eletric_id/:location_id/orders',
+  OrderController.index
+);
+routes.post('/users/:user_id/orders', OrderController.store);
 
 export default routes;

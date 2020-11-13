@@ -17,7 +17,7 @@ class User extends Model {
       }
     );
 
-    this.addHook('beforeSave', async user => {
+    this.addHook('beforeSave', async (user) => {
       if (user.password) {
         user.password_hash = await bcrypt.hash(user.password, 8);
       }
@@ -28,8 +28,36 @@ class User extends Model {
 
   static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
-    this.belongsTo(models.Notification, { foreignKey: 'token_id', as: 'tokens' });
-    this.belongsToMany(models.Order, { foreignKey: 'user_id', through:'user_orders', as: 'orders' });
+    this.belongsTo(models.Notification, {
+      foreignKey: 'token_id',
+      as: 'tokens',
+    });
+    this.belongsToMany(models.Direction, {
+      foreignKey: 'user_id',
+      through: 'user_orders',
+      as: 'directions',
+    });
+    this.belongsToMany(models.Area, {
+      foreignKey: 'user_id',
+      through: 'user_orders',
+      as: 'areas',
+    });
+    this.belongsToMany(models.Eletric, {
+      foreignKey: 'user_id',
+      through: 'user_orders',
+      as: 'eletric',
+    });
+    this.belongsToMany(models.Location, {
+      foreignKey: 'user_id',
+      through: 'user_orders',
+      as: 'location',
+    });
+
+    this.belongsToMany(models.Order, {
+      foreignKey: 'user_id',
+      through: 'user_orders',
+      as: 'orders',
+    });
   }
 
   checkPassword(password) {

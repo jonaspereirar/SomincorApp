@@ -8,16 +8,14 @@ class Fixo extends Model {
       },
       {
         sequelize,
-        tableName: 'fixos'
+        tableName: 'fixos',
       }
     );
     return this;
   }
-      // static associate(models) {
-      //   this.belongsToMany(models.User, { foreignKey: 'departamento_id', through: 'user_departamentos', as: 'users'  })
-      // }
-
-  }
-
+  // static associate(models) {
+  //   this.belongsToMany(models.User, { foreignKey: 'departamento_id', through: 'user_departamentos', as: 'users'  })
+  // }
+}
 
 export default Fixo;

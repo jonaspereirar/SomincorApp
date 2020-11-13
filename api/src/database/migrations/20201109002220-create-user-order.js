@@ -14,6 +14,13 @@ module.exports = {
         onDelete: 'CASCADE',
         allowNull: true,
       },
+      order_id: {
+        type: Sequelize.INTEGER,
+        references: { model: 'users', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        allowNull: true,
+      },
       direction_id: {
         type: Sequelize.INTEGER,
         references: { model: 'directions', key: 'id' },
@@ -74,7 +81,7 @@ module.exports = {
     });
   },
 
-  down: queryInterface => {
+  down: (queryInterface) => {
     return queryInterface.dropTable('user_orders');
   },
 };

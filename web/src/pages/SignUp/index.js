@@ -12,35 +12,45 @@ import { signUpRequest } from '~/store/modules/auth/actions';
 const schema = Yup.object().shape({
   name: Yup.string().required('É necessário digitar seu nome'),
   number: Yup.string().required('É necessário digitar seu número'),
-  email: Yup.string().email('Insira um email valido!')
-  .required('É necessário digitar se e-mail'),
-  password: Yup.string().min(6, 'Mínimo de 6 caracteres').required('É necessário digitar sua senha'),
+  email: Yup.string()
+    .email('Insira um email valido!')
+    .required('É necessário digitar se e-mail'),
+  password: Yup.string()
+    .min(6, 'Mínimo de 6 caracteres')
+    .required('É necessário digitar sua senha'),
 });
-
 
 export default function SignUp() {
   const dispatch = useDispatch();
-  const loading = useSelector(state => state.auth.loading);
+  const loading = useSelector((state) => state.auth.loading);
 
   function handleSubmit({ name, number, email, password }) {
     dispatch(signUpRequest(name, number, email, password));
   }
 
   return (
-  <>
-    <img src={logo} alt="SomincorApp"/>
+    <>
+      <img src={logo} alt="SomincorApp" />
 
-    <Form schema={schema} onSubmit={handleSubmit}>
-    <h1>Faça seu Registo</h1>
-      <Input name="name" type="name" placeholder="Nome Completo" />
-      <Input name="number" type="number" placeholder="Digite seu nº de colaborador" />
-      <Input name="email" type="email" placeholder="Digite seu e-mail" />
-      <Input name="password" type="password" placeholder="Sua senha" />
+      <Form schema={schema} onSubmit={handleSubmit}>
+        <h1>Faça seu Registo</h1>
+        <Input name="name" type="name" placeholder="Nome Completo" />
+        <Input
+          name="number"
+          type="number"
+          placeholder="Digite seu nº de colaborador"
+        />
+        <Input name="email" type="email" placeholder="Digite seu e-mail" />
+        <Input name="password" type="password" placeholder="Sua senha" />
 
-      <button type="submit">{loading ? 'Carregando...' : 'Criar conta'}</button>
-      <Link to="/"><FiArrowLeft />Voltar</Link>
-
-    </Form>
-  </>
+        <button type="submit">
+          {loading ? 'Carregando...' : 'Criar conta'}
+        </button>
+        <Link to="/">
+          <FiArrowLeft />
+          Voltar
+        </Link>
+      </Form>
+    </>
   );
 }

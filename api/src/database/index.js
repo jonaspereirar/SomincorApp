@@ -14,7 +14,19 @@ import Order from '../app/models/Order';
 
 import databaseConfig from '../config/database';
 
-const models = [User, File, Notification, Direction, Area, Eletric, Fixo, Movel, Instrumentation, Location, Order];
+const models = [
+  User,
+  File,
+  Notification,
+  Direction,
+  Area,
+  Eletric,
+  Fixo,
+  Movel,
+  Instrumentation,
+  Location,
+  Order,
+];
 
 class Database {
   constructor() {
@@ -25,9 +37,10 @@ class Database {
     this.connection = new Sequelize(databaseConfig);
 
     models
-    .map(model => model.init(this.connection))
-    .map(model => model.associate && model.associate(this.connection.models));
-
+      .map((model) => model.init(this.connection))
+      .map(
+        (model) => model.associate && model.associate(this.connection.models)
+      );
   }
 }
 

@@ -8,16 +8,19 @@ class Location extends Model {
       },
       {
         sequelize,
-        tableName: 'locations'
+        tableName: 'locations',
       }
     );
     return this;
   }
-      // static associate(models) {
-      //   this.belongsToMany(models.User, { foreignKey: 'departamento_id', through: 'user_departamentos', as: 'users'  })
-      // }
 
+  static associate(models) {
+    this.belongsToMany(models.User, {
+      foreignKey: 'location_id',
+      through: 'user_orders',
+      as: 'locationusers',
+    });
   }
-
+}
 
 export default Location;

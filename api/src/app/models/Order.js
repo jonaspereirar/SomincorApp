@@ -4,20 +4,24 @@ class Order extends Model {
   static init(sequelize) {
     super.init(
       {
-        name: Sequelize.STRING,
+        front: Sequelize.STRING,
+        description: Sequelize.STRING,
       },
       {
         sequelize,
-        tableName: 'orders'
+        tableName: 'orders',
       }
     );
     return this;
   }
-      static associate(models) {
-        this.belongsToMany(models.User, { foreignKey: 'order_id', through: 'user_order', as: 'users'  })
-      }
 
+  static associate(models) {
+    this.belongsToMany(models.User, {
+      foreignKey: 'order_id',
+      through: 'user_orders',
+      as: 'users',
+    });
   }
-
+}
 
 export default Order;

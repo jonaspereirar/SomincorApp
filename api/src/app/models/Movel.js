@@ -8,16 +8,14 @@ class Movel extends Model {
       },
       {
         sequelize,
-        tableName: 'moveis'
+        tableName: 'moveis',
       }
     );
     return this;
   }
-      // static associate(models) {
-      //   this.belongsToMany(models.User, { foreignKey: 'departamento_id', through: 'user_departamentos', as: 'users'  })
-      // }
-
-  }
-
+  // static associate(models) {
+  //   this.belongsToMany(models.User, { foreignKey: 'departamento_id', through: 'user_departamentos', as: 'users'  })
+  // }
+}
 
 export default Movel;

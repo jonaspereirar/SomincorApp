@@ -1,8 +1,8 @@
-'use strict';
-
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-      return queryInterface.bulkInsert('users', [
+  up: (queryInterface) => {
+    return queryInterface.bulkInsert(
+      'users',
+      [
         {
           name: 'Spiderman',
           number: '1414',
@@ -10,7 +10,7 @@ module.exports = {
           password_hash: '123456',
           created_at: new Date(),
           updated_at: new Date(),
-          },
+        },
         {
           name: 'Hulk',
           number: '1414',
@@ -18,13 +18,13 @@ module.exports = {
           password_hash: '123456',
           created_at: new Date(),
           updated_at: new Date(),
-          }
-    ], {});
-
+        },
+      ],
+      {}
+    );
   },
 
-  down: (queryInterface, Sequelize) => {
-      return queryInterface.bulkDelete('users', null, {});
-
-  }
+  down: (queryInterface) => {
+    return queryInterface.bulkDelete('users', null, {});
+  },
 };

@@ -1,10 +1,9 @@
-
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-height: 100%;
-background: linear-gradient(-90deg, #ff5200, #ffc107);
-/* display: flex;
+  height: 100%;
+  background: linear-gradient(-90deg, #ff5200, #ffc107);
+  /* display: flex;
 justify-content: center;
 align-items: center; */
 `;

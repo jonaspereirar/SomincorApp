@@ -8,7 +8,7 @@ class SendMail {
   }
 
   async handle({ data }) {
-    const { user, token, link, } = data;
+    const { user, token, link } = data;
 
     const now = new Date();
     now.setHours(now.getHours());
@@ -18,17 +18,14 @@ class SendMail {
       subject: 'Renovação da minha senha - Reset my password',
       template: 'forgotpassword',
       context: {
-        token: token,
+        token,
         user: user.name,
-        link: link,
+        link,
         date: format(now, "'dia' dd 'de' MMMM', às' H:mm'h'", {
           locale: pt,
         }),
       },
-    }, (err) => {
-          if (err)
-            return res.status(400).send({ error: 'Cannot send forgot password email' });
-          })
+    });
   }
 }
 

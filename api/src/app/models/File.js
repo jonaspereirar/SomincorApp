@@ -11,7 +11,7 @@ class File extends Model {
           get() {
             return `${process.env.APP_URL}/files/${this.path}`;
           },
-        }
+        },
       },
       {
         sequelize,

@@ -14,7 +14,6 @@ class Notification extends Model {
 
     return this;
   }
-
- }
+}
 
 export default Notification;

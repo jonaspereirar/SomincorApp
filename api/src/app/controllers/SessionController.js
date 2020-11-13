@@ -12,25 +12,25 @@ class SessionController {
       password: Yup.string().required(),
     });
 
-    if(!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' })
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
     }
 
     const { number, password } = req.body;
 
     const user = await User.findOne({
       where: { number },
-    include: [
-      {
-        model: File,
-        as: 'avatar',
-        attributes: ['id', 'path', 'url'],
-      },
-    ]
-  });
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['id', 'path', 'url'],
+        },
+      ],
+    });
 
     if (!user) {
-      return res.status(401).json({ error: 'User not found'});
+      return res.status(401).json({ error: 'User not found' });
     }
 
     if (!(await user.checkPassword(password))) {
@@ -48,12 +48,11 @@ class SessionController {
         provider,
         avatar,
       },
-      token: jwt.sign( { id }, authConfig.secret, {
+      token: jwt.sign({ id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       }),
-    })
+    });
   }
-
 }
 
 export default new SessionController();

@@ -8,16 +8,19 @@ class Area extends Model {
       },
       {
         sequelize,
-        tableName: 'areas'
+        tableName: 'areas',
       }
     );
     return this;
   }
-      // static associate(models) {
-      //   this.belongsToMany(models.User, { foreignKey: 'departamento_id', through: 'user_departamentos', as: 'users'  })
-      // }
 
+  static associate(models) {
+    this.belongsToMany(models.User, {
+      foreignKey: 'area_id',
+      through: 'user_orders',
+      as: 'areausers',
+    });
   }
-
+}
 
 export default Area;

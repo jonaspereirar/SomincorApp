@@ -1,22 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Wrapper, AnimationContainer, Container, Content, Background } from './styles';
+import {
+  Wrapper,
+  AnimationContainer,
+  Container,
+  Content,
+  Background,
+} from './styles';
 
 export default function AuthLayout({ children }) {
   return (
     <Container>
       <Content>
         <AnimationContainer>
-        <Wrapper>
+          <Wrapper>
             <Content>{children}</Content>
             <Background />
-        </Wrapper>
+          </Wrapper>
         </AnimationContainer>
-       </Content>
+      </Content>
       <Background />
     </Container>
-  )
+  );
 }
 
 AuthLayout.propTypes = {

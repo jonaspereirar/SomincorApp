@@ -16,26 +16,41 @@ const schema = Yup.object().shape({
 
 export default function SignIn() {
   const dispatch = useDispatch();
-  const loading = useSelector(state => state.auth.loading);
+  const loading = useSelector((state) => state.auth.loading);
 
   function handleSubmit({ number, password }) {
     dispatch(signInRequest(number, password));
   }
 
   return (
-  <>
-    <img src={logo} alt="SomincorApp"/>
+    <>
+      <img src={logo} alt="SomincorApp" />
 
-    <Form schema={schema} onSubmit={handleSubmit}>
-    <h1>Faça seu login</h1>
-      <Input name="number" icon={FiMail} type="number" placeholder="Digite seu nº" />
-      <Input name="password" icon={FiLock} type="password" placeholder="Digite sua senha" />
+      <Form schema={schema} onSubmit={handleSubmit}>
+        <h1>Faça seu login</h1>
+        <Input
+          name="number"
+          icon={FiMail}
+          type="number"
+          placeholder="Digite seu nº"
+        />
+        <Input
+          name="password"
+          icon={FiLock}
+          type="password"
+          placeholder="Digite sua senha"
+        />
 
-      <button type="submit">{loading ? 'Carregando...' : 'Acessar'}</button>
-      <Link to="/register"><FiLogIn />Criar conta</Link>
-      <Link to="/forgot"><FiMail />Recuperar senha</Link>
-
-    </Form>
-  </>
+        <button type="submit">{loading ? 'Carregando...' : 'Acessar'}</button>
+        <Link to="/register">
+          <FiLogIn />
+          Criar conta
+        </Link>
+        <Link to="/forgot">
+          <FiMail />
+          Recuperar senha
+        </Link>
+      </Form>
+    </>
   );
 }

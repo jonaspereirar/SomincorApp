@@ -36,13 +36,22 @@ class ForgotPasswordController {
     });
   }
 
-  async update(req, res, next) {
+  async update(req, res) {
     const { password } = req.body;
     const { token } = req.params;
     const decoded = jwtToken.verifyToken(token);
     const hash = hashPassword(password);
     const updatedUser = await User.update(
-      { password_hash: hash },
+      {
+        password_hash: hash,
+        include: [
+          {
+            model: User,
+            as: 'token',
+            attributes: ['notification'],
+          },
+        ],
+      },
       {
         where: { id: decoded.userId },
         returning: true,
@@ -51,9 +60,7 @@ class ForgotPasswordController {
     );
 
     const { id, name, email } = updatedUser[1];
-    return res
-      .status(200)
-      .send({ token, user: { id, name, email, hash, password } });
+    return res.status(200).send({ user: { id, name, email } });
   }
 }
 

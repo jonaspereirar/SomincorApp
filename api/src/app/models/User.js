@@ -32,10 +32,6 @@ class User extends Model {
       foreignKey: 'direction_id',
       as: 'direction',
     });
-    this.belongsTo(models.Notification, {
-      foreignKey: 'token_id',
-      as: 'tokens',
-    });
   }
 
   checkPassword(password) {

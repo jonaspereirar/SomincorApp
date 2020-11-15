@@ -5,7 +5,7 @@ import File from '../models/File';
 import Direction from '../models/Direction';
 
 class UserController {
-  async store(req, res) {
+  async store(req, res, next) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       number: Yup.string().required(),
@@ -15,32 +15,35 @@ class UserController {
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
+    try {
+      const userExists = await User.findOne({
+        where: { number: req.body.number },
+      });
 
-    const userExists = await User.findOne({
-      where: { number: req.body.number },
-    });
+      if (userExists) {
+        return res.status(400).json({ error: 'User already exists.' });
+      }
 
-    if (userExists) {
-      return res.status(400).json({ error: 'User already exists.' });
+      const emailExists = await User.findOne({
+        where: { email: req.body.email },
+      });
+
+      if (emailExists) {
+        return res.status(400).json({ error: 'email already registed.' });
+      }
+
+      const { id, name, number, email, provider } = await User.create(req.body);
+
+      return res.json({
+        id,
+        name,
+        number,
+        email,
+        provider,
+      });
+    } catch (error) {
+      return next(new Error(error));
     }
-
-    const emailExists = await User.findOne({
-      where: { email: req.body.email },
-    });
-
-    if (emailExists) {
-      return res.status(400).json({ error: 'email already registed.' });
-    }
-
-    const { id, name, number, email, provider } = await User.create(req.body);
-
-    return res.json({
-      id,
-      name,
-      number,
-      email,
-      provider,
-    });
   }
 
   async update(req, res, next) {
@@ -96,7 +99,6 @@ class UserController {
 
       return res.json({ id, name, avatar, direction });
     } catch (error) {
-      console.log(error);
       return next(new Error(error));
     }
   }

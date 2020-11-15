@@ -15,10 +15,9 @@ class Direction extends Model {
   }
 
   static associate(models) {
-    this.belongsToMany(models.User, {
+    this.belongsTo(models.User, {
       foreignKey: 'direction_id',
-      through: 'user_orders',
-      as: 'directionusers',
+      as: 'direction',
     });
   }
 }

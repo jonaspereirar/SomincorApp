@@ -28,35 +28,13 @@ class User extends Model {
 
   static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
+    this.belongsTo(models.Direction, {
+      foreignKey: 'direction_id',
+      as: 'direction',
+    });
     this.belongsTo(models.Notification, {
       foreignKey: 'token_id',
       as: 'tokens',
-    });
-    this.belongsToMany(models.Direction, {
-      foreignKey: 'user_id',
-      through: 'user_orders',
-      as: 'directions',
-    });
-    this.belongsToMany(models.Area, {
-      foreignKey: 'user_id',
-      through: 'user_orders',
-      as: 'areas',
-    });
-    this.belongsToMany(models.Eletric, {
-      foreignKey: 'user_id',
-      through: 'user_orders',
-      as: 'eletric',
-    });
-    this.belongsToMany(models.Location, {
-      foreignKey: 'user_id',
-      through: 'user_orders',
-      as: 'location',
-    });
-
-    this.belongsToMany(models.Order, {
-      foreignKey: 'user_id',
-      through: 'user_orders',
-      as: 'orders',
     });
   }
 

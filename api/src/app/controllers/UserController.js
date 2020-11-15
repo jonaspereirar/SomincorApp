@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 
 import User from '../models/User';
 import File from '../models/File';
+import Direction from '../models/Direction';
 
 class UserController {
   async store(req, res) {
@@ -42,7 +43,7 @@ class UserController {
     });
   }
 
-  async update(req, res) {
+  async update(req, res, next) {
     const schema = Yup.object().shape({
       number: Yup.string().required(),
       oldPassword: Yup.string().min(6),
@@ -59,36 +60,45 @@ class UserController {
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
+    try {
+      const { email, oldPassword } = req.body;
 
-    const { email, oldPassword } = req.body;
+      const user = await User.findByPk(req.userId);
 
-    const user = await User.findByPk(req.userId);
+      if (email && email !== user.email) {
+        const userExists = await User.findOne({ where: { email } });
 
-    if (email && email !== user.email) {
-      const userExists = await User.findOne({ where: { email } });
-
-      if (userExists) {
-        return res.status(400).json({ error: 'User already exists.' });
+        if (userExists) {
+          return res.status(400).json({ error: 'User already exists.' });
+        }
       }
+
+      if (oldPassword && !(await user.checkPassword(oldPassword))) {
+        return res.status(401).json({ error: 'Password does not match.' });
+      }
+
+      await user.update(req.body);
+
+      const { id, name, avatar, direction } = await User.findByPk(req.userId, {
+        include: [
+          {
+            model: File,
+            as: 'avatar',
+            attributes: ['id', 'path', 'url'],
+          },
+          {
+            model: Direction,
+            as: 'direction',
+            attributes: ['name'],
+          },
+        ],
+      });
+
+      return res.json({ id, name, avatar, direction });
+    } catch (error) {
+      console.log(error);
+      return next(new Error(error));
     }
-
-    if (oldPassword && !(await user.checkPassword(oldPassword))) {
-      return res.status(401).json({ error: 'Password does not match.' });
-    }
-
-    await user.update(req.body);
-
-    const { id, name, avatar } = await User.findByPk(req.userId, {
-      include: [
-        {
-          model: File,
-          as: 'avatar',
-          attributes: ['id', 'path', 'url'],
-        },
-      ],
-    });
-
-    return res.json({ id, name, avatar });
   }
 }
 

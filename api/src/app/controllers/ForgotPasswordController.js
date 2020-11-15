@@ -42,16 +42,7 @@ class ForgotPasswordController {
     const decoded = jwtToken.verifyToken(token);
     const hash = hashPassword(password);
     const updatedUser = await User.update(
-      {
-        password_hash: hash,
-        include: [
-          {
-            model: User,
-            as: 'token',
-            attributes: ['notification'],
-          },
-        ],
-      },
+      { password_hash: hash },
       {
         where: { id: decoded.userId },
         returning: true,

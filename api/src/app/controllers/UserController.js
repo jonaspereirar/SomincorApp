@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import User from '../models/User';
 import File from '../models/File';
 import Direction from '../models/Direction';
+import Area from '../models/Area';
 
 class UserController {
   async store(req, res, next) {
@@ -82,23 +83,32 @@ class UserController {
 
       await user.update(req.body);
 
-      const { id, name, avatar, direction } = await User.findByPk(req.userId, {
-        include: [
-          {
-            model: File,
-            as: 'avatar',
-            attributes: ['id', 'path', 'url'],
-          },
-          {
-            model: Direction,
-            as: 'direction',
-            attributes: ['name'],
-          },
-        ],
-      });
+      const { id, name, avatar, direction, area } = await User.findByPk(
+        req.userId,
+        {
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['id', 'path', 'url'],
+            },
+            {
+              model: Direction,
+              as: 'direction',
+              attributes: ['name'],
+            },
+            {
+              model: Area,
+              as: 'area',
+              attributes: ['name'],
+            },
+          ],
+        }
+      );
 
-      return res.json({ id, name, avatar, direction });
+      return res.json({ id, name, avatar, direction, area });
     } catch (error) {
+      console.log(error);
       return next(new Error(error));
     }
   }

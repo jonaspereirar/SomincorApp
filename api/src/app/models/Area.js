@@ -1,6 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 
-class Direction extends Model {
+class Area extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -8,7 +8,7 @@ class Direction extends Model {
       },
       {
         sequelize,
-        tableName: 'directions',
+        tableName: 'areas',
       }
     );
     return this;
@@ -16,11 +16,11 @@ class Direction extends Model {
 
   static associate(models) {
     this.belongsToMany(models.User, {
-      foreignKey: 'direction_id',
+      foreignKey: 'area_id',
       through: 'users',
-      as: 'direction',
+      as: 'area',
     });
   }
 }
 
-export default Direction;
+export default Area;

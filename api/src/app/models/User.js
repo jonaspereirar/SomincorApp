@@ -32,6 +32,10 @@ class User extends Model {
       foreignKey: 'direction_id',
       as: 'direction',
     });
+    this.belongsTo(models.Area, {
+      foreignKey: 'area_id',
+      as: 'area',
+    });
   }
 
   checkPassword(password) {

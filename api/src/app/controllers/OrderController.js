@@ -22,8 +22,15 @@ class OrderController {
   }
 
   async store(req, res, next) {
-    const { user_id, location_id } = req.params;
     try {
+      const { user_id } = req.params;
+      const { location, ...data } = req.body;
+      const order = await Order.create(data);
+
+      if (location && Location.length > 0) {
+        order.setLocation(location);
+      }
+
       const user = await User.findByPk(user_id, {
         include: [
           {
@@ -39,19 +46,21 @@ class OrderController {
         ],
       });
 
-      if (!user) {
-        return res.status(400).json({ error: 'User not found' });
-      }
+      // if (!user) {
+      //   return res.status(400).json({ error: 'User not found' });
+      // }
 
-      const location = await Location.findOne(location_id);
-      if (!location) {
-        return res.status(400).json({ error: 'Area not found' });
-      }
+      // const location = await Location.findOne(location_id);
 
-      const { front, description } = await Order.create(req.body);
+      // if (!location) {
+      //   return res.status(400).json({ error: 'Location not found' });
+      // }
 
-      return res.json({ user, location, front, description });
+      // await Order.create(req.body, { location });
+
+      return res.json({ user, location });
     } catch (e) {
+      console.log(e);
       return next(new Error(e));
     }
   }

@@ -32,7 +32,7 @@ routes.post('/files', upload.single('file'), FileController.store);
 routes.get('/providers', ProviderController.index);
 
 routes.get('/users/:user_id/orders', OrderController.index);
-routes.post('/users/:user_id/:locations/orders', OrderController.store);
+routes.post('/users/:user_id/orders', OrderController.store);
 routes.delete('/users/:user_id/orders', OrderController.delete);
 routes.put('/users/:user_id/orders', OrderController.update);
 

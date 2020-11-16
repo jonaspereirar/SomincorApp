@@ -5,10 +5,12 @@ import File from '../app/models/File';
 import Notification from '../app/models/Notification';
 import Direction from '../app/models/Direction';
 import Area from '../app/models/Area';
+import Order from '../app/models/Order';
+import Location from '../app/models/Location';
 
 import databaseConfig from '../config/database';
 
-const models = [User, File, Notification, Direction, Area];
+const models = [User, File, Notification, Direction, Area, Order, Location];
 
 class Database {
   constructor() {

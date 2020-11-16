@@ -36,6 +36,11 @@ class User extends Model {
       foreignKey: 'area_id',
       as: 'area',
     });
+    this.belongsToMany(models.Order, {
+      foreignKey: 'user_id',
+      through: 'orders',
+      as: 'order',
+    });
   }
 
   checkPassword(password) {

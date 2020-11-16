@@ -14,13 +14,13 @@ class Area extends Model {
     return this;
   }
 
-  static associate(models) {
-    this.belongsToMany(models.User, {
-      foreignKey: 'area_id',
-      through: 'users',
-      as: 'area',
-    });
-  }
+  // static associate(models) {
+  //   this.belongsToMany(models.Order, {
+  //     foreignKey: 'area_id',
+  //     through: 'orders',
+  //     as: 'area',
+  //   });
+  // }
 }
 
 export default Area;

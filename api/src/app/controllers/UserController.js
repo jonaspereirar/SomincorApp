@@ -108,7 +108,6 @@ class UserController {
 
       return res.json({ id, name, avatar, direction, area });
     } catch (error) {
-      console.log(error);
       return next(new Error(error));
     }
   }

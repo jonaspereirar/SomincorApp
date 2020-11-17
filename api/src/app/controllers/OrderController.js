@@ -5,30 +5,40 @@ import Location from '../models/Location';
 import File from '../models/File';
 
 class OrderController {
-  async index(req, res) {
-    const { user_id } = req.params;
+  async index(req, res, next) {
+    try {
+      const { user_id } = req.params;
 
-    const user = await User.findByPk(user_id, {
-      include: {
-        association: 'orders',
-        attributes: ['front'],
-        through: {
-          attributes: ['user_id'],
+      const user = await User.findByPk(user_id, {
+        include: {
+          model: Order,
+          as: 'order',
+          attributes: ['title'],
+          through: {
+            attributes: [],
+          },
         },
-      },
-    });
+      });
 
-    return res.json(user.orders);
+      return res.json(user.orders);
+    } catch (e) {
+      console.log(e);
+      return next(new Error(e));
+    }
   }
 
   async store(req, res, next) {
     try {
       const { user_id } = req.params;
-      const { location, ...data } = req.body;
+      const { location, area, ...data } = req.body;
       const order = await Order.create(data);
 
       if (location && Location.length > 0) {
         order.setLocation(location);
+      }
+
+      if (area && area.length > 0) {
+        order.setArea(area);
       }
 
       const user = await User.findByPk(user_id, {
@@ -46,9 +56,10 @@ class OrderController {
         ],
       });
 
-      // if (!user) {
-      //   return res.status(400).json({ error: 'User not found' });
-      // }
+      if (user && user.length > 0) {
+        order.setUser(user);
+      }
+
 
       // const location = await Location.findOne(location_id);
 
@@ -58,7 +69,7 @@ class OrderController {
 
       // await Order.create(req.body, { location });
 
-      return res.json({ user, location });
+      return res.json({ user, location, area });
     } catch (e) {
       console.log(e);
       return next(new Error(e));

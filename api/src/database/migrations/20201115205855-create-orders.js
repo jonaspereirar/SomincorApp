@@ -14,6 +14,17 @@ module.exports = {
         onDelete: 'CASCADE',
         allowNull: true,
       },
+      area_id: {
+        type: Sequelize.INTEGER,
+        references: { model: 'areas', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        allowNull: true,
+      },
+      title: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       description: {
         type: Sequelize.STRING,
         allowNull: false,

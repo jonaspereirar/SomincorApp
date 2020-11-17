@@ -5,6 +5,8 @@ class Order extends Model {
     super.init(
       {
         user_id: Sequelize.INTEGER,
+        area_id: Sequelize.INTEGER,
+        title: Sequelize.INTEGER,
         description: Sequelize.STRING,
         front: Sequelize.STRING,
         location_id: Sequelize.INTEGER,
@@ -28,11 +30,11 @@ class Order extends Model {
       through: 'orders',
       as: 'location',
     });
-    // this.belongsToMany(models.Area, {
-    //   foreignKey: 'area_id',
-    //   through: 'orders',
-    //   as: 'area',
-    // });
+    this.belongsToMany(models.Area, {
+      foreignKey: 'area_id',
+      through: 'orders',
+      as: 'area',
+    });
   }
 }
 

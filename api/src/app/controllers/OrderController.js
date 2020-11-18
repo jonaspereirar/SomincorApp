@@ -60,15 +60,6 @@ class OrderController {
         order.setUser(user);
       }
 
-
-      // const location = await Location.findOne(location_id);
-
-      // if (!location) {
-      //   return res.status(400).json({ error: 'Location not found' });
-      // }
-
-      // await Order.create(req.body, { location });
-
       return res.json({ user, location, area });
     } catch (e) {
       console.log(e);
